@@ -1,24 +1,49 @@
-import { useState } from 'react';
-import { Search } from 'lucide-react';
-import { useCourses } from '../hooks/useCourses.js';
-import CourseCard from '../components/course/CourseCard.jsx';
-import Input from '../components/ui/Input.jsx';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCourses, useEnrollCourse } from '../hooks/useCourses.js';
+import { useIsAuthenticated } from '../hooks/useAuth.js';
 
-export default function Courses() {
-  const [filters, setFilters] = useState({
-    category: '',
-    level: '',
-    search: '',
-  });
+const Courses = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated();
+  const { data: courses, isLoading, error, refetch } = useCourses();
+  const enrollMutation = useEnrollCourse();
+  
+  const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const { data, isLoading, error } = useCourses(filters);
+  const handleEnroll = async (courseId) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      await enrollMutation.mutateAsync(courseId);
+      alert('Successfully enrolled in course!');
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to enroll');
+    }
+  };
+
+  const handleViewDetails = (courseId) => {
+    navigate(`/courses/${courseId}`);
+  };
+
+  // Filter courses
+  const filteredCourses = courses?.filter(course => {
+    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         course.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter = filter === 'all' || course.level === filter;
+    return matchesSearch && matchesFilter;
+  }) || [];
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading courses...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading courses...</p>
         </div>
       </div>
     );
@@ -26,83 +51,148 @@ export default function Courses() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">Failed to load courses</p>
-          <button onClick={() => window.location.reload()} className="btn-primary">
-            Try Again
-          </button>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="max-w-md w-full">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+            <div className="text-red-600 text-5xl mb-4">⚠️</div>
+            <h3 className="text-lg font-semibold text-red-900 mb-2">
+              Failed to Load Courses
+            </h3>
+            <p className="text-red-700 mb-4">
+              {error.response?.data?.message || error.message}
+            </p>
+            <button
+              onClick={() => refetch()}
+              className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition"
+            >
+              Try Again
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-  const courses = data?.courses || [];
-
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
+        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Explore Courses</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Explore Courses
+          </h1>
           <p className="text-gray-600">
-            Discover {courses.length} free courses to advance your skills
+            Discover and enroll in courses that match your interests
           </p>
         </div>
 
         {/* Filters */}
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 text-gray-400" size={20} />
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Search */}
+            <div>
               <input
                 type="text"
                 placeholder="Search courses..."
-                className="input pl-10"
-                value={filters.search}
-                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
-            <select
-              className="input"
-              value={filters.category}
-              onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-            >
-              <option value="">All Categories</option>
-              <option value="Programming">Programming</option>
-              <option value="Business">Business</option>
-              <option value="Design">Design</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Science">Science</option>
-              <option value="Mathematics">Mathematics</option>
-            </select>
-
-            <select
-              className="input"
-              value={filters.level}
-              onChange={(e) => setFilters({ ...filters, level: e.target.value })}
-            >
-              <option value="">All Levels</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
+            {/* Level Filter */}
+            <div>
+              <select
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="all">All Levels</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        {/* Course Grid */}
-        {courses.length === 0 ? (
+        {/* Courses Grid */}
+        {filteredCourses.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No courses found. Try adjusting your filters.</p>
+            <div className="text-gray-400 text-6xl mb-4">📚</div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+              No courses found
+            </h3>
+            <p className="text-gray-500">
+              {searchTerm || filter !== 'all'
+                ? 'Try adjusting your filters'
+                : 'Check back soon for new courses'}
+            </p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <CourseCard key={course._id} course={course} />
+            {filteredCourses.map((course) => (
+              <div
+                key={course._id}
+                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+              >
+                {/* Course Image */}
+                <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                  <span className="text-white text-6xl">📖</span>
+                </div>
+
+                {/* Course Content */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full">
+                      {course.level}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {course.duration}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {course.title}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {course.description}
+                  </p>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xl font-bold text-blue-600">
+                      ${course.price}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      👤 {course.instructor}
+                    </span>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleViewDetails(course._id)}
+                      className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition font-medium"
+                    >
+                      View Details
+                    </button>
+                    <button
+                      onClick={() => handleEnroll(course._id)}
+                      disabled={enrollMutation.isPending}
+                      className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-medium disabled:bg-blue-300 disabled:cursor-not-allowed"
+                    >
+                      {enrollMutation.isPending ? 'Enrolling...' : 'Enroll Now'}
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}
       </div>
     </div>
   );
-}
+};
+
+export default Courses;

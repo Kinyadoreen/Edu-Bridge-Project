@@ -6,22 +6,10 @@ export const useAuthStore = create(
     (set, get) => ({
       user: null,
       token: null,
-
-      login: (user, token) => {
-        set({ user, token });
-      },
-
-      logout: () => {
-        set({ user: null, token: null });
-      },
-
-      isAuthenticated: () => {
-        const { token } = get();
-        return !!token;
-      },
+      login: (user, token) => set({ user, token }),
+      logout: () => set({ user: null, token: null }),
+      isAuthenticated: () => !!get().token
     }),
-    {
-      name: 'edubridge-auth',
-    }
+    { name: 'edubridge-auth' }
   )
 );
