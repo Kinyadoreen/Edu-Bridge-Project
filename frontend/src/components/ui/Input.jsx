@@ -1,6 +1,7 @@
-import { cn } from '../../utils/helpers.js';
+const React = require('react');
+const { cn } = require('../../utils/helpers.js');
 
-export default function Input({ label, error, className, ...props }) {
+function Input({ label, error, className, ...props }) {
   return (
     <div className="w-full">
       {label && (
@@ -20,3 +21,5 @@ export default function Input({ label, error, className, ...props }) {
     </div>
   );
 }
+
+module.exports = Input;

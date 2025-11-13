@@ -1,8 +1,9 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Login from '../Login.jsx';
+const { describe, it, expect, vi } = require('vitest');
+const { render, screen, fireEvent, waitFor } = require('@testing-library/react');
+const React = require('react');
+const { BrowserRouter } = require('react-router-dom');
+const { QueryClient, QueryClientProvider } = require('@tanstack/react-query');
+const Login = require('../Login.jsx');
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,26 +14,26 @@ const queryClient = new QueryClient({
 
 const renderWithProviders = (component) => {
   return render(
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        {component}
-      </BrowserRouter>
-    </QueryClientProvider>
+    React.createElement(
+      QueryClientProvider,
+      { client: queryClient },
+      React.createElement(BrowserRouter, null, component)
+    )
   );
 };
 
 describe('Login Page', () => {
   it('renders login form', () => {
-    renderWithProviders(<Login />);
-    
+    renderWithProviders(React.createElement(Login));
+
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
   });
 
   it('shows validation errors for empty fields', async () => {
-    renderWithProviders(<Login />);
-    
+    renderWithProviders(React.createElement(Login));
+
     const submitButton = screen.getByRole('button', { name: /login/i });
     fireEvent.click(submitButton);
 
@@ -42,8 +43,8 @@ describe('Login Page', () => {
   });
 
   it('submits form with valid data', async () => {
-    renderWithProviders(<Login />);
-    
+    renderWithProviders(React.createElement(Login));
+
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
     const submitButton = screen.getByRole('button', { name: /login/i });

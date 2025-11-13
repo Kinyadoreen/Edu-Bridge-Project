@@ -1,8 +1,8 @@
-// frontend/src/components/DiscussionForum.jsx
-import { MessageCircle, ThumbsUp, Reply } from 'lucide-react';
-import { useState } from 'react';
+const React = require('react');
+const { useState } = require('react');
+const { MessageCircle, ThumbsUp, Reply } = require('lucide-react');
 
-export default function DiscussionForum({ courseId, comments, onAddComment }) {
+function DiscussionForum({ courseId, comments, onAddComment }) {
   const [newComment, setNewComment] = useState('');
 
   const handleSubmit = (e) => {
@@ -71,3 +71,5 @@ export default function DiscussionForum({ courseId, comments, onAddComment }) {
     </div>
   );
 }
+
+module.exports = DiscussionForum;

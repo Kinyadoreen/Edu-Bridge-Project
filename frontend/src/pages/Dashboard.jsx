@@ -1,9 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import useDashboard from '../hooks/useDashboard.js';
-import { useCurrentUser, useLogout } from '../hooks/useAuth.js';
+const React = require('react');
+const { useNavigate } = require('react-router-dom');
+const useDashboard = require('../hooks/useDashboard.js');
+const { useCurrentUser, useLogout } = require('../hooks/useAuth.js');
 
-const Dashboard = () => {
+function Dashboard() {
   const navigate = useNavigate();
   const currentUser = useCurrentUser();
   const logout = useLogout();
@@ -257,6 +257,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Dashboard;
+module.exports = Dashboard;

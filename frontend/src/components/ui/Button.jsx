@@ -1,6 +1,7 @@
-import { cn } from '../../utils/helpers.js';
+const React = require('react');
+const { cn } = require('../../utils/helpers.js');
 
-export default function Button({ 
+function Button({ 
   children, 
   variant = 'primary', 
   isLoading = false, 
@@ -14,24 +15,28 @@ export default function Button({
     danger: 'bg-red-500 text-white hover:bg-red-600',
   };
 
-  return (
-    <button
-      className={cn(
+  return React.createElement(
+    'button',
+    {
+      className: cn(
         'px-4 py-2 rounded-lg transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed',
         variants[variant],
         className
-      )}
-      disabled={disabled || isLoading}
-      {...props}
-    >
-      {isLoading ? (
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          Loading...
-        </div>
-      ) : (
-        children
-      )}
-    </button>
+      ),
+      disabled: disabled || isLoading,
+      ...props
+    },
+    isLoading
+      ? React.createElement(
+          'div',
+          { className: 'flex items-center gap-2' },
+          React.createElement('div', {
+            className: 'w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin'
+          }),
+          'Loading...'
+        )
+      : children
   );
 }
+
+module.exports = Button;

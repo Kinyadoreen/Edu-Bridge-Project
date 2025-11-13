@@ -1,36 +1,37 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import Button from '../ui/Button.jsx';
+const { describe, it, expect, vi } = require('vitest');
+const { render, screen, fireEvent } = require('@testing-library/react');
+const React = require('react');
+const Button = require('../ui/Button.jsx');
 
 describe('Button Component', () => {
   it('renders correctly', () => {
-    render(<Button>Click me</Button>);
+    render(React.createElement(Button, null, 'Click me'));
     expect(screen.getByText('Click me')).toBeInTheDocument();
   });
 
   it('calls onClick when clicked', () => {
     const handleClick = vi.fn();
-    render(<Button onClick={handleClick}>Click me</Button>);
+    render(React.createElement(Button, { onClick: handleClick }, 'Click me'));
     
     fireEvent.click(screen.getByText('Click me'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
   it('shows loading state', () => {
-    render(<Button isLoading>Submit</Button>);
+    render(React.createElement(Button, { isLoading: true }, 'Submit'));
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('is disabled when loading', () => {
-    render(<Button isLoading>Submit</Button>);
+    render(React.createElement(Button, { isLoading: true }, 'Submit'));
     expect(screen.getByRole('button')).toBeDisabled();
   });
 
   it('applies variant classes', () => {
-    const { rerender } = render(<Button variant="primary">Primary</Button>);
+    const { rerender } = render(React.createElement(Button, { variant: 'primary' }, 'Primary'));
     expect(screen.getByRole('button')).toHaveClass('bg-primary-600');
 
-    rerender(<Button variant="secondary">Secondary</Button>);
+    rerender(React.createElement(Button, { variant: 'secondary' }, 'Secondary'));
     expect(screen.getByRole('button')).toHaveClass('border-primary-600');
   });
 });

@@ -1,7 +1,7 @@
-import api from '../../utils/api.js';
+const api = require('../../utils/api.js');
 
 // Login
-export const login = (email, password) => async (dispatch) => {
+const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: 'LOGIN_REQUEST' });
     
@@ -26,7 +26,7 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 // Register
-export const register = (userData) => async (dispatch) => {
+const register = (userData) => async (dispatch) => {
   try {
     dispatch({ type: 'REGISTER_REQUEST' });
     
@@ -51,7 +51,9 @@ export const register = (userData) => async (dispatch) => {
 };
 
 // Logout
-export const logout = () => (dispatch) => {
+const logout = () => (dispatch) => {
   localStorage.removeItem('token');
   dispatch({ type: 'LOGOUT' });
 };
+
+module.exports = { login, register, logout };

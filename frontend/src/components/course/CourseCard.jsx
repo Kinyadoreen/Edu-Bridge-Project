@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
-import { BookOpen, Users, Clock } from 'lucide-react';
+const React = require('react');
+const { Link } = require('react-router-dom');
+const { BookOpen, Users, Clock } = require('lucide-react');
 
-export default function CourseCard({ course }) {
+function CourseCard({ course }) {
   return (
     <Link
       to={`/courses/${course._id}`}
@@ -42,3 +43,5 @@ export default function CourseCard({ course }) {
     </Link>
   );
 }
+
+module.exports = CourseCard;

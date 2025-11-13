@@ -1,35 +1,14 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, 'Please provide a name'],
-      trim: true,
-      maxlength: [50, 'Name cannot exceed 50 characters'],
-    },
-    email: {
-      type: String,
-      required: [true, 'Please provide an email'],
-      unique: true,
-      lowercase: true,
-      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email'],
-    },
-    password: {
-      type: String,
-      required: [true, 'Please provide a password'],
-      minlength: [6, 'Password must be at least 6 characters'],
-      select: false,
-    },
-    role: {
-      type: String,
-      enum: ['student', 'teacher', 'admin'],
-      default: 'student',
-    },
+    name: { type: String, required: true, trim: true, maxlength: 50 },
+    email: { type: String, required: true, unique: true, lowercase: true },
+    password: { type: String, required: true, select: false },
+    role: { type: String, enum: ['student', 'teacher', 'admin'], default: 'student' },
     enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
     createdCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-    isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
@@ -41,9 +20,9 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-// Compare password method
+// Compare password
 UserSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-export default mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

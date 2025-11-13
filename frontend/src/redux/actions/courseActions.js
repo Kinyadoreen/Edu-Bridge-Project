@@ -1,7 +1,7 @@
-import api from '../../utils/api.js';
+const api = require('../../utils/api.js');
 
 // Fetch all courses
-export const fetchCourses = () => async (dispatch) => {
+const fetchCourses = () => async (dispatch) => {
   try {
     dispatch({ type: 'FETCH_COURSES_REQUEST' });
     
@@ -20,7 +20,7 @@ export const fetchCourses = () => async (dispatch) => {
 };
 
 // Fetch single course by ID
-export const fetchCourseById = (id) => async (dispatch) => {
+const fetchCourseById = (id) => async (dispatch) => {
   try {
     dispatch({ type: 'FETCH_COURSE_REQUEST' });
     
@@ -39,7 +39,7 @@ export const fetchCourseById = (id) => async (dispatch) => {
 };
 
 // Create new course (instructor only)
-export const createCourse = (courseData) => async (dispatch) => {
+const createCourse = (courseData) => async (dispatch) => {
   try {
     const response = await api.post('/courses', courseData);
     
@@ -58,7 +58,7 @@ export const createCourse = (courseData) => async (dispatch) => {
 };
 
 // Update course
-export const updateCourse = (id, courseData) => async (dispatch) => {
+const updateCourse = (id, courseData) => async (dispatch) => {
   try {
     const response = await api.put(`/courses/${id}`, courseData);
     
@@ -77,7 +77,7 @@ export const updateCourse = (id, courseData) => async (dispatch) => {
 };
 
 // Delete course
-export const deleteCourse = (id) => async (dispatch) => {
+const deleteCourse = (id) => async (dispatch) => {
   try {
     await api.delete(`/courses/${id}`);
     
@@ -96,6 +96,15 @@ export const deleteCourse = (id) => async (dispatch) => {
 };
 
 // Clear course errors
-export const clearCourseError = () => (dispatch) => {
+const clearCourseError = () => (dispatch) => {
   dispatch({ type: 'CLEAR_COURSE_ERROR' });
+};
+
+module.exports = {
+  fetchCourses,
+  fetchCourseById,
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  clearCourseError
 };

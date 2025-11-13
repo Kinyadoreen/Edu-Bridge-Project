@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice.js';
-import courseReducer from './slices/courseSlice.js';
+const { configureStore } = require('@reduxjs/toolkit');
+const authReducer = require('./slices/authSlice').default;
+const courseReducer = require('./slices/courseSlice').default;
 
 const store = configureStore({
   reducer: {
@@ -9,4 +9,4 @@ const store = configureStore({
   },
 });
 
-export default store;
+module.exports = store;

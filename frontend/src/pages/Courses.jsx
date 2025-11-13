@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCourses, useEnrollCourse } from '../hooks/useCourses.js';
-import { useIsAuthenticated } from '../hooks/useAuth.js';
+const React = require('react');
+const { useState } = React;
+const { useNavigate } = require('react-router-dom');
+const { useCourses, useEnrollCourse } = require('../hooks/useCourses.js');
+const { useIsAuthenticated } = require('../hooks/useAuth.js');
 
 const Courses = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Courses = () => {
   const filteredCourses = courses?.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          course.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filter === 'all' || course.level === filter;
+    const matchesFilter = filter === 'all' || course.level.toLowerCase() === filter.toLowerCase();
     return matchesSearch && matchesFilter;
   }) || [];
 
@@ -89,7 +90,6 @@ const Courses = () => {
         {/* Filters */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="grid md:grid-cols-2 gap-4">
-            {/* Search */}
             <div>
               <input
                 type="text"
@@ -100,7 +100,6 @@ const Courses = () => {
               />
             </div>
 
-            {/* Level Filter */}
             <div>
               <select
                 value={filter}
@@ -136,12 +135,10 @@ const Courses = () => {
                 key={course._id}
                 className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
               >
-                {/* Course Image */}
                 <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                   <span className="text-white text-6xl">📖</span>
                 </div>
 
-                {/* Course Content */}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-2">
                     <span className="px-3 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full">
@@ -169,7 +166,6 @@ const Courses = () => {
                     </span>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleViewDetails(course._id)}
@@ -195,4 +191,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+module.exports = Courses;

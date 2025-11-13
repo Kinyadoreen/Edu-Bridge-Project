@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import api from '../utils/api.js';
+const { useQuery } = require('@tanstack/react-query');
+const api = require('../utils/api.js');
 
 const useDashboard = () => {
   // Fetch dashboard stats
@@ -54,4 +54,4 @@ const useDashboard = () => {
   };
 };
 
-export default useDashboard;
+module.exports = useDashboard;

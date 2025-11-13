@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useAuthStore } from '../store/authStore.js';
+const axios = require('axios');
+const { useAuthStore } = require('../store/authStore');
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -35,7 +35,7 @@ apiClient.interceptors.response.use(
   }
 );
 
-export const api = {
+const api = {
   // Auth
   async login(email, password) {
     const { data } = await apiClient.post('/auth/login', { email, password });
@@ -85,4 +85,4 @@ export const api = {
   },
 };
 
-export default apiClient;
+module.exports = { api, default: apiClient };

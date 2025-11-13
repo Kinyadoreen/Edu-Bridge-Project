@@ -1,8 +1,8 @@
-// frontend/src/components/CourseReviews.jsx
-import { Star } from 'lucide-react';
-import { useState } from 'react';
+const React = require('react');
+const { useState } = require('react');
+const { Star } = require('lucide-react');
 
-export default function CourseReviews({ courseId, reviews, onSubmit }) {
+function CourseReviews({ courseId, reviews, onSubmit }) {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
 
@@ -80,3 +80,5 @@ export default function CourseReviews({ courseId, reviews, onSubmit }) {
     </div>
   );
 }
+
+module.exports = CourseReviews;

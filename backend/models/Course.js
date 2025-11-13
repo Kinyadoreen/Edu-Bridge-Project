@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const LessonSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -29,7 +29,16 @@ const CourseSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['Programming', 'Business', 'Design', 'Marketing', 'Science', 'Mathematics', 'Languages',  'Life Skills'],
+      enum: [
+        'Programming',
+        'Business',
+        'Design',
+        'Marketing',
+        'Science',
+        'Mathematics',
+        'Languages',
+        'Life Skills',
+      ],
     },
     level: {
       type: String,
@@ -47,4 +56,4 @@ const CourseSchema = new mongoose.Schema(
 CourseSchema.index({ title: 'text', description: 'text' });
 CourseSchema.index({ category: 1, level: 1 });
 
-export default mongoose.model('Course', CourseSchema);
+module.exports = mongoose.model('Course', CourseSchema);

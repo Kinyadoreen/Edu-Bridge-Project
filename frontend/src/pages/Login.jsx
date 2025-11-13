@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useLogin } from '../hooks/useAuth.js';
+const React = require('react');
+const { useState } = React;
+const { Link } = require('react-router-dom');
+const { useLogin } = require('../hooks/useAuth.js');
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const loginMutation = useLogin();
@@ -127,6 +128,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Login;
+module.exports = Login;

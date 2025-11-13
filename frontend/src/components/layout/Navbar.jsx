@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
-import { BookOpen, LogOut, User, GraduationCap } from 'lucide-react';
-import { useAuthStore } from '../../store/authStore.js';
+const React = require('react');
+const { Link } = require('react-router-dom');
+const { BookOpen, LogOut, User, GraduationCap } = require('lucide-react');
+const { useAuthStore } = require('../../store/authStore.js');
 
-export default function Navbar() {
+function Navbar() {
   const { user, isAuthenticated, logout } = useAuthStore();
 
   return (
@@ -67,3 +68,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+module.exports = Navbar;

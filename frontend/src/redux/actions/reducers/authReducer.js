@@ -4,7 +4,7 @@ const initialState = {
   error: null,
 };
 
-export const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN_REQUEST':
       return { ...state, loading: true };
@@ -18,3 +18,5 @@ export const authReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+module.exports = { authReducer };

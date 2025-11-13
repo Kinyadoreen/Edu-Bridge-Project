@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 // Create axios instance with base configuration
 const api = axios.create({
@@ -46,4 +46,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+module.exports = api;

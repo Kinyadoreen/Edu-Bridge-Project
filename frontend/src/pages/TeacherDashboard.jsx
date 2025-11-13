@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { BookOpen, PlusCircle, Edit, Trash2 } from 'lucide-react';
-import { useCourses, useCreateCourse } from '../hooks/useCourses.js';
-import Button from '../components/ui/Button.jsx';
-import Input from '../components/ui/Input.jsx';
+const React = require('react');
+const { useState } = React;
+const { BookOpen, PlusCircle, Edit, Trash2 } = require('lucide-react');
+const { useCourses, useCreateCourse } = require('../hooks/useCourses.js');
+const Button = require('../components/ui/Button.jsx');
+const Input = require('../components/ui/Input.jsx');
 
-export default function TeacherDashboard() {
+function TeacherDashboard() {
   const [showModal, setShowModal] = useState(false);
   const { data, refetch } = useCourses();
   const { mutate: createCourse, isPending } = useCreateCourse();
@@ -260,3 +261,5 @@ function CreateCourseModal({ onClose, onCreate, isLoading }) {
     </div>
   );
 }
+
+module.exports = TeacherDashboard;

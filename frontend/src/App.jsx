@@ -1,15 +1,14 @@
-// src/App.jsx
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuthStore } from './store/authStore.js';
-import Navbar from './components/layout/Navbar.jsx';
-import Home from './pages/Home.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import Courses from './pages/Courses.jsx';
-import CourseDetail from './pages/CourseDetail.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import TeacherDashboard from './pages/TeacherDashboard.jsx';
-
+const React = require('react');
+const { Routes, Route, Navigate } = require('react-router-dom');
+const { useAuthStore } = require('./store/authStore.js');
+const Navbar = require('./components/layout/Navbar.jsx');
+const Home = require('./pages/Home.jsx');
+const Login = require('./pages/Login.jsx');
+const Register = require('./pages/Register.jsx');
+const Courses = require('./pages/Courses.jsx');
+const CourseDetail = require('./pages/CourseDetail.jsx');
+const Dashboard = require('./pages/Dashboard.jsx');
+const TeacherDashboard = require('./pages/TeacherDashboard.jsx');
 
 function App() {
   const { user, isAuthenticated } = useAuthStore();
@@ -59,4 +58,4 @@ function App() {
   );
 }
 
-export default App;
+module.exports = App;

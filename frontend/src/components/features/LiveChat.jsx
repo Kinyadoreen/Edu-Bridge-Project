@@ -1,9 +1,9 @@
-// frontend/src/components/LiveChat.jsx
-import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
-import { Send } from 'lucide-react';
+const React = require('react');
+const { useState, useEffect } = require('react');
+const { io } = require('socket.io-client');
+const { Send } = require('lucide-react');
 
-export default function LiveChat({ courseId, user }) {
+function LiveChat({ courseId, user }) {
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -60,3 +60,5 @@ export default function LiveChat({ courseId, user }) {
     </div>
   );
 }
+
+module.exports = LiveChat;

@@ -4,7 +4,7 @@ const initialState = {
   error: null,
 };
 
-export const courseReducer = (state = initialState, action) => {
+const courseReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'COURSES_REQUEST':
       return { ...state, loading: true };
@@ -16,3 +16,5 @@ export const courseReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+module.exports = { courseReducer };

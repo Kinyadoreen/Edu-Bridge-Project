@@ -1,8 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '../utils/api.js';
+const { useQuery, useMutation, useQueryClient } = require('@tanstack/react-query');
+const api = require('../utils/api.js');
 
 // Fetch all courses
-export const useCourses = () => {
+const useCourses = () => {
   return useQuery({
     queryKey: ['courses'],
     queryFn: async () => {
@@ -13,7 +13,7 @@ export const useCourses = () => {
 };
 
 // Fetch single course by ID
-export const useCourse = (id) => {
+const useCourse = (id) => {
   return useQuery({
     queryKey: ['course', id],
     queryFn: async () => {
@@ -25,9 +25,9 @@ export const useCourse = (id) => {
 };
 
 // Create course mutation
-export const useCreateCourse = () => {
+const useCreateCourse = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async (courseData) => {
       const response = await api.post('/courses', courseData);
@@ -41,9 +41,9 @@ export const useCreateCourse = () => {
 };
 
 // Update course mutation
-export const useUpdateCourse = () => {
+const useUpdateCourse = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async ({ id, data }) => {
       const response = await api.put(`/courses/${id}`, data);
@@ -58,9 +58,9 @@ export const useUpdateCourse = () => {
 };
 
 // Delete course mutation
-export const useDeleteCourse = () => {
+const useDeleteCourse = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async (id) => {
       await api.delete(`/courses/${id}`);
@@ -73,9 +73,9 @@ export const useDeleteCourse = () => {
 };
 
 // Enroll in course mutation
-export const useEnrollCourse = () => {
+const useEnrollCourse = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async (courseId) => {
       const response = await api.post('/enrollments', { courseId });
@@ -87,4 +87,13 @@ export const useEnrollCourse = () => {
       queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
     }
   });
+};
+
+module.exports = {
+  useCourses,
+  useCourse,
+  useCreateCourse,
+  useUpdateCourse,
+  useDeleteCourse,
+  useEnrollCourse
 };
