@@ -1,5 +1,5 @@
-const React = require('react');
-const { cn } = require('../../utils/helpers.js');
+import React from 'react';
+import { cn } from '../../utils/helpers.js';
 
 function Input({ label, error, className, ...props }) {
   return (
@@ -22,4 +22,4 @@ function Input({ label, error, className, ...props }) {
   );
 }
 
-module.exports = Input;
+export default Input;

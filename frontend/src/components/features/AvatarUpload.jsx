@@ -1,6 +1,5 @@
-const React = require('react');
-const { useState } = require('react');
-const { Upload, User } = require('lucide-react');
+import React, { useState } from 'react';
+import { Upload, User } from 'lucide-react';
 
 function AvatarUpload({ currentAvatar, onUpload }) {
   const [uploading, setUploading] = useState(false);
@@ -67,4 +66,4 @@ function AvatarUpload({ currentAvatar, onUpload }) {
   );
 }
 
-module.exports = AvatarUpload;
+export default AvatarUpload;

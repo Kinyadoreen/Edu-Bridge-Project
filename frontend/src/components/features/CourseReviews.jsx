@@ -1,6 +1,5 @@
-const React = require('react');
-const { useState } = require('react');
-const { Star } = require('lucide-react');
+import React, { useState } from 'react';
+import { Star } from 'lucide-react';
 
 function CourseReviews({ courseId, reviews, onSubmit }) {
   const [rating, setRating] = useState(5);
@@ -81,4 +80,4 @@ function CourseReviews({ courseId, reviews, onSubmit }) {
   );
 }
 
-module.exports = CourseReviews;
+export default CourseReviews;

@@ -1,15 +1,15 @@
 {
   "short_name": "EduBridge",
-  "name": "EduBridge App",
+  "name": "EduBridge - Quality Education for All",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "background_color": "#ffffff",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#2563EB"
 }

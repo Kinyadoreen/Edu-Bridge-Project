@@ -1,13 +1,13 @@
-const React = require('react');
-const { useNavigate } = require('react-router-dom');
-const useDashboard = require('../hooks/useDashboard.js');
-const { useCurrentUser, useLogout } = require('../hooks/useAuth.js');
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useDashboard from '../hooks/useDashboard.js';
+import { useCurrentUser, useLogout } from '../hooks/useAuth.js';
 
-function Dashboard() {
+export default function Dashboard() {
   const navigate = useNavigate();
   const currentUser = useCurrentUser();
   const logout = useLogout();
-  
+
   const { stats, courses, activities, isLoading } = useDashboard();
 
   const handleLogout = () => {
@@ -56,6 +56,7 @@ function Dashboard() {
       <div className="container mx-auto px-4 py-8">
         {/* Stats Cards */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
+          {/* Total Courses */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -70,6 +71,7 @@ function Dashboard() {
             </div>
           </div>
 
+          {/* In Progress */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -84,6 +86,7 @@ function Dashboard() {
             </div>
           </div>
 
+          {/* Completed */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -98,6 +101,7 @@ function Dashboard() {
             </div>
           </div>
 
+          {/* Total Hours */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -147,7 +151,7 @@ function Dashboard() {
                           <p className="text-sm text-gray-600 mb-3">
                             {enrollment.course.description}
                           </p>
-                          
+
                           {/* Progress Bar */}
                           <div className="mb-2">
                             <div className="flex justify-between text-sm text-gray-600 mb-1">
@@ -166,7 +170,7 @@ function Dashboard() {
                             <span>👤 {enrollment.course.instructor}</span>
                             <span>⏱️ {enrollment.course.duration}</span>
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              enrollment.status === 'completed' 
+                              enrollment.status === 'completed'
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-yellow-100 text-yellow-700'
                             }`}>
@@ -197,7 +201,7 @@ function Dashboard() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-6">Recent Activity</h2>
-              
+
               {activities.isLoading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
@@ -258,5 +262,3 @@ function Dashboard() {
     </div>
   );
 }
-
-module.exports = Dashboard;

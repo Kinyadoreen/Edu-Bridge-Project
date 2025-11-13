@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
@@ -33,7 +33,7 @@ api.interceptors.response.use(
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
-    
+
     // Log error for debugging
     console.error('API Error:', {
       url: error.config?.url,
@@ -41,9 +41,9 @@ api.interceptors.response.use(
       status: error.response?.status,
       message: error.response?.data?.message || error.message
     });
-    
+
     return Promise.reject(error);
   }
 );
 
-module.exports = api;
+export default api;

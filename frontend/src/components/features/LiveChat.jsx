@@ -1,7 +1,6 @@
-const React = require('react');
-const { useState, useEffect } = require('react');
-const { io } = require('socket.io-client');
-const { Send } = require('lucide-react');
+import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
+import { Send } from 'lucide-react';
 
 function LiveChat({ courseId, user }) {
   const [socket, setSocket] = useState(null);
@@ -61,4 +60,4 @@ function LiveChat({ courseId, user }) {
   );
 }
 
-module.exports = LiveChat;
+export default LiveChat;

@@ -1,5 +1,5 @@
-const { useQuery } = require('@tanstack/react-query');
-const api = require('../utils/api.js');
+import { useQuery } from '@tanstack/react-query';
+import api from '../utils/api.js';
 
 const useDashboard = () => {
   // Fetch dashboard stats
@@ -8,7 +8,7 @@ const useDashboard = () => {
     queryFn: async () => {
       const response = await api.get('/dashboard/stats');
       return response.data;
-    }
+    },
   });
 
   // Fetch enrolled courses
@@ -17,7 +17,7 @@ const useDashboard = () => {
     queryFn: async () => {
       const response = await api.get('/enrollments/my-courses');
       return response.data;
-    }
+    },
   });
 
   // Fetch recent activities
@@ -26,32 +26,32 @@ const useDashboard = () => {
     queryFn: async () => {
       const response = await api.get('/dashboard/activities');
       return response.data;
-    }
+    },
   });
 
   return {
     stats: {
       data: statsQuery.data,
       isLoading: statsQuery.isLoading,
-      error: statsQuery.error
+      error: statsQuery.error,
     },
     courses: {
       data: coursesQuery.data,
       isLoading: coursesQuery.isLoading,
-      error: coursesQuery.error
+      error: coursesQuery.error,
     },
     activities: {
       data: activitiesQuery.data,
       isLoading: activitiesQuery.isLoading,
-      error: activitiesQuery.error
+      error: activitiesQuery.error,
     },
     isLoading: statsQuery.isLoading || coursesQuery.isLoading || activitiesQuery.isLoading,
     refetch: () => {
       statsQuery.refetch();
       coursesQuery.refetch();
       activitiesQuery.refetch();
-    }
+    },
   };
 };
 
-module.exports = useDashboard;
+export default useDashboard;

@@ -1,5 +1,5 @@
-const React = require('react');
-const { cn } = require('../../utils/helpers.js');
+import React from 'react';
+import { cn } from '../../utils/helpers.js';
 
 function Button({ 
   children, 
@@ -39,4 +39,4 @@ function Button({
   );
 }
 
-module.exports = Button;
+export default Button;

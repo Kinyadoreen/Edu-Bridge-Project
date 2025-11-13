@@ -1,7 +1,7 @@
-const React = require('react');
-const { Link } = require('react-router-dom');
-const { BookOpen, LogOut, User, GraduationCap } = require('lucide-react');
-const { useAuthStore } = require('../../store/authStore.js');
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { BookOpen, LogOut, User, GraduationCap } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore.js';
 
 function Navbar() {
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -16,19 +16,31 @@ function Navbar() {
           </Link>
 
           <div className="hidden md:flex space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-primary-600 transition font-medium">
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-primary-600 transition font-medium"
+            >
               Home
             </Link>
-            <Link to="/courses" className="text-gray-700 hover:text-primary-600 transition font-medium">
+            <Link
+              to="/courses"
+              className="text-gray-700 hover:text-primary-600 transition font-medium"
+            >
               Courses
             </Link>
             {isAuthenticated() && (
               <>
-                <Link to="/dashboard" className="text-gray-700 hover:text-primary-600 transition font-medium">
+                <Link
+                  to="/dashboard"
+                  className="text-gray-700 hover:text-primary-600 transition font-medium"
+                >
                   Dashboard
                 </Link>
                 {user?.role === 'teacher' && (
-                  <Link to="/teacher" className="text-gray-700 hover:text-primary-600 transition font-medium flex items-center gap-1">
+                  <Link
+                    to="/teacher"
+                    className="text-gray-700 hover:text-primary-600 transition font-medium flex items-center gap-1"
+                  >
                     <GraduationCap size={18} />
                     My Courses
                   </Link>
@@ -69,4 +81,4 @@ function Navbar() {
   );
 }
 
-module.exports = Navbar;
+export default Navbar;

@@ -1,11 +1,11 @@
-const React = require('react');
-const { useParams, useNavigate } = require('react-router-dom');
-const { ArrowLeft, Play, CheckCircle, Lock } = require('lucide-react');
-const { useCourse, useEnrollCourse } = require('../hooks/useCourses.js');
-const { useAuthStore } = require('../store/authStore.js');
-const Button = require('../components/ui/Button.jsx');
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Play, CheckCircle, Lock } from 'lucide-react';
+import { useCourse, useEnrollCourse } from '../hooks/useCourses.js';
+import { useAuthStore } from '../store/authStore.js';
+import Button from '../components/ui/Button.jsx';
 
-function CourseDetail() {
+export default function CourseDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
@@ -156,5 +156,3 @@ function CourseDetail() {
     </div>
   );
 }
-
-module.exports = CourseDetail;

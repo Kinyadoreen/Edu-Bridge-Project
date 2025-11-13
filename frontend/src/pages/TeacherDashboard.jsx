@@ -1,11 +1,10 @@
-const React = require('react');
-const { useState } = React;
-const { BookOpen, PlusCircle, Edit, Trash2 } = require('lucide-react');
-const { useCourses, useCreateCourse } = require('../hooks/useCourses.js');
-const Button = require('../components/ui/Button.jsx');
-const Input = require('../components/ui/Input.jsx');
+import React, { useState } from 'react';
+import { BookOpen, PlusCircle, Edit, Trash2 } from 'lucide-react';
+import { useCourses, useCreateCourse } from '../hooks/useCourses.js';
+import Button from '../components/ui/Button.jsx';
+import Input from '../components/ui/Input.jsx';
 
-function TeacherDashboard() {
+export default function TeacherDashboard() {
   const [showModal, setShowModal] = useState(false);
   const { data, refetch } = useCourses();
   const { mutate: createCourse, isPending } = useCreateCourse();
@@ -51,15 +50,9 @@ function TeacherDashboard() {
         {courses.length === 0 ? (
           <div className="card text-center py-12">
             <BookOpen className="mx-auto text-gray-300 mb-4" size={64} />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
-              No Courses Yet
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Create your first course to start teaching!
-            </p>
-            <Button onClick={() => setShowModal(true)}>
-              Create Your First Course
-            </Button>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No Courses Yet</h3>
+            <p className="text-gray-600 mb-6">Create your first course to start teaching!</p>
+            <Button onClick={() => setShowModal(true)}>Create Your First Course</Button>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -261,5 +254,3 @@ function CreateCourseModal({ onClose, onCreate, isLoading }) {
     </div>
   );
 }
-
-module.exports = TeacherDashboard;

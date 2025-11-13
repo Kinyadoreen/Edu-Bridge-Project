@@ -1,8 +1,8 @@
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
-const axios = require('axios');
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 // Fetch courses from backend
-const fetchCourses = createAsyncThunk(
+export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
   async (_, { rejectWithValue }) => {
     try {
@@ -39,7 +39,4 @@ const coursesSlice = createSlice({
   }
 });
 
-module.exports = {
-  fetchCourses,
-  default: coursesSlice.reducer
-};
+export default coursesSlice.reducer;

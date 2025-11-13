@@ -1,6 +1,5 @@
-const React = require('react');
-const { useState } = require('react');
-const { MessageCircle, ThumbsUp, Reply } = require('lucide-react');
+import React, { useState } from 'react';
+import { MessageCircle, ThumbsUp, Reply } from 'lucide-react';
 
 function DiscussionForum({ courseId, comments, onAddComment }) {
   const [newComment, setNewComment] = useState('');
@@ -72,4 +71,4 @@ function DiscussionForum({ courseId, comments, onAddComment }) {
   );
 }
 
-module.exports = DiscussionForum;
+export default DiscussionForum;

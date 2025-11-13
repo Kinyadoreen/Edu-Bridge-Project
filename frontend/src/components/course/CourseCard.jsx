@@ -1,6 +1,6 @@
-const React = require('react');
-const { Link } = require('react-router-dom');
-const { BookOpen, Users, Clock } = require('lucide-react');
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { BookOpen, Users, Clock } from 'lucide-react';
 
 function CourseCard({ course }) {
   return (
@@ -44,4 +44,4 @@ function CourseCard({ course }) {
   );
 }
 
-module.exports = CourseCard;
+export default CourseCard;

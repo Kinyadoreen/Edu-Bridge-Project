@@ -1,15 +1,14 @@
-const React = require('react');
-const { useState } = React;
-const { useNavigate } = require('react-router-dom');
-const { useCourses, useEnrollCourse } = require('../hooks/useCourses.js');
-const { useIsAuthenticated } = require('../hooks/useAuth.js');
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCourses, useEnrollCourse } from '../hooks/useCourses.js';
+import { useIsAuthenticated } from '../hooks/useAuth.js';
 
-const Courses = () => {
+export default function Courses() {
   const navigate = useNavigate();
   const isAuthenticated = useIsAuthenticated();
   const { data: courses, isLoading, error, refetch } = useCourses();
   const enrollMutation = useEnrollCourse();
-  
+
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -31,10 +30,9 @@ const Courses = () => {
     navigate(`/courses/${courseId}`);
   };
 
-  // Filter courses
   const filteredCourses = courses?.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         course.description.toLowerCase().includes(searchTerm.toLowerCase());
+                          course.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filter === 'all' || course.level.toLowerCase() === filter.toLowerCase();
     return matchesSearch && matchesFilter;
   }) || [];
@@ -90,28 +88,23 @@ const Courses = () => {
         {/* Filters */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <input
-                type="text"
-                placeholder="Search courses..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="all">All Levels</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
+            <input
+              type="text"
+              placeholder="Search courses..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="all">All Levels</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
           </div>
         </div>
 
@@ -189,6 +182,4 @@ const Courses = () => {
       </div>
     </div>
   );
-};
-
-module.exports = Courses;
+}

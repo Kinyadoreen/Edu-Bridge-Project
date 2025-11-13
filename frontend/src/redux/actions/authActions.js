@@ -1,20 +1,20 @@
-const api = require('../../utils/api.js');
+import api from '../../utils/api.js';
 
 // Login
-const login = (email, password) => async (dispatch) => {
+export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: 'LOGIN_REQUEST' });
-    
+
     const response = await api.post('/auth/login', { email, password });
-    
+
     // Save token
     localStorage.setItem('token', response.data.token);
-    
+
     dispatch({
       type: 'LOGIN_SUCCESS',
       payload: response.data
     });
-    
+
     return { success: true };
   } catch (error) {
     dispatch({
@@ -26,20 +26,20 @@ const login = (email, password) => async (dispatch) => {
 };
 
 // Register
-const register = (userData) => async (dispatch) => {
+export const register = (userData) => async (dispatch) => {
   try {
     dispatch({ type: 'REGISTER_REQUEST' });
-    
+
     const response = await api.post('/auth/register', userData);
-    
+
     // Save token
     localStorage.setItem('token', response.data.token);
-    
+
     dispatch({
       type: 'REGISTER_SUCCESS',
       payload: response.data
     });
-    
+
     return { success: true };
   } catch (error) {
     dispatch({
@@ -51,9 +51,7 @@ const register = (userData) => async (dispatch) => {
 };
 
 // Logout
-const logout = () => (dispatch) => {
+export const logout = () => (dispatch) => {
   localStorage.removeItem('token');
   dispatch({ type: 'LOGOUT' });
 };
-
-module.exports = { login, register, logout };

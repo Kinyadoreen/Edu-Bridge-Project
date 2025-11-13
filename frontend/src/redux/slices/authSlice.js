@@ -1,4 +1,4 @@
-const { createSlice } = require('@reduxjs/toolkit');
+import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -18,10 +18,5 @@ const authSlice = createSlice({
   }
 });
 
-const { login, logout } = authSlice.actions;
-
-module.exports = {
-  login,
-  logout,
-  default: authSlice.reducer
-};
+export const { login, logout } = authSlice.actions;
+export default authSlice.reducer;

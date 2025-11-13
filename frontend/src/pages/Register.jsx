@@ -1,12 +1,11 @@
-const React = require('react');
-const { useState } = React;
-const { Link } = require('react-router-dom');
-const { BookOpen } = require('lucide-react');
-const { useRegister } = require('../hooks/useAuth.js');
-const Input = require('../components/ui/Input.jsx');
-const Button = require('../components/ui/Button.jsx');
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { BookOpen } from 'lucide-react';
+import { useRegister } from '../hooks/useAuth.js';
+import Input from '../components/ui/Input.jsx';
+import Button from '../components/ui/Button.jsx';
 
-function Register() {
+export default function Register() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,7 +15,6 @@ function Register() {
 
   const { mutate: register, isPending, error } = useRegister();
 
-  // Example handleSubmit function
   const handleSubmit = (e) => {
     e.preventDefault();
     register(formData, {
@@ -34,12 +32,8 @@ function Register() {
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">
-            Create Account
-          </h2>
-          <p className="text-gray-600">
-            Join EduBridge and start your learning journey
-          </p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">Create Account</h2>
+          <p className="text-gray-600">Join EduBridge and start your learning journey</p>
         </div>
 
         {/* Registration Form */}
@@ -79,12 +73,18 @@ function Register() {
               </select>
             </div>
 
-            <Button type="submit" isLoading={isPending} className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+            <Button
+              type="submit"
+              isLoading={isPending}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            >
               {isPending ? 'Registering...' : 'Sign Up'}
             </Button>
 
             {error && (
-              <p className="text-red-600 text-sm mt-2">{error.response?.data?.message || 'Registration failed'}</p>
+              <p className="text-red-600 text-sm mt-2">
+                {error.response?.data?.message || 'Registration failed'}
+              </p>
             )}
           </form>
 
@@ -101,5 +101,3 @@ function Register() {
     </div>
   );
 }
-
-module.exports = Register;

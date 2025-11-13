@@ -1,9 +1,8 @@
-const React = require('react');
-const { useState } = React;
-const { Link } = require('react-router-dom');
-const { useLogin } = require('../hooks/useAuth.js');
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLogin } from '../hooks/useAuth.js';
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const loginMutation = useLogin();
@@ -28,12 +27,8 @@ function Login() {
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">
-            Welcome Back! 👋
-          </h2>
-          <p className="text-gray-600">
-            Sign in to continue your learning journey
-          </p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">Welcome Back! 👋</h2>
+          <p className="text-gray-600">Sign in to continue your learning journey</p>
         </div>
 
         {/* Login Form */}
@@ -41,9 +36,7 @@ function Login() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
               <input
                 type="email"
                 value={email}
@@ -56,9 +49,7 @@ function Login() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <input
                 type="password"
                 value={password}
@@ -77,13 +68,9 @@ function Login() {
                   id="remember"
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
-                  Remember me
-                </label>
+                <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">Remember me</label>
               </div>
-              <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">
-                Forgot password?
-              </Link>
+              <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">Forgot password?</Link>
             </div>
 
             {/* Submit Button */}
@@ -100,9 +87,7 @@ function Login() {
                   </svg>
                   Signing in...
                 </span>
-              ) : (
-                'Sign In'
-              )}
+              ) : 'Sign In'}
             </button>
           </form>
 
@@ -119,9 +104,7 @@ function Login() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
-              <Link to="/register" className="text-blue-600 hover:text-blue-700 font-semibold">
-                Sign up
-              </Link>
+              <Link to="/register" className="text-blue-600 hover:text-blue-700 font-semibold">Sign up</Link>
             </p>
           </div>
         </div>
@@ -129,5 +112,3 @@ function Login() {
     </div>
   );
 }
-
-module.exports = Login;

@@ -1,11 +1,11 @@
-const { useMutation, useQueryClient } = require('@tanstack/react-query');
-const { useNavigate } = require('react-router-dom');
-const api = require('../utils/api.js');
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import api from '../utils/api.js';
 
 // ---------------------------
 // Login
 // ---------------------------
-const useLogin = () => {
+export const useLogin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -35,7 +35,7 @@ const useLogin = () => {
 // ---------------------------
 // Register
 // ---------------------------
-const useRegister = () => {
+export const useRegister = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -56,7 +56,7 @@ const useRegister = () => {
 // ---------------------------
 // Logout
 // ---------------------------
-const useLogout = () => {
+export const useLogout = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -71,7 +71,7 @@ const useLogout = () => {
 // ---------------------------
 // Current User
 // ---------------------------
-const useCurrentUser = () => {
+export const useCurrentUser = () => {
   const userStr = localStorage.getItem('user');
   return userStr ? JSON.parse(userStr) : null;
 };
@@ -79,14 +79,6 @@ const useCurrentUser = () => {
 // ---------------------------
 // Check if authenticated
 // ---------------------------
-const useIsAuthenticated = () => {
+export const useIsAuthenticated = () => {
   return !!localStorage.getItem('token');
-};
-
-module.exports = {
-  useLogin,
-  useRegister,
-  useLogout,
-  useCurrentUser,
-  useIsAuthenticated,
 };

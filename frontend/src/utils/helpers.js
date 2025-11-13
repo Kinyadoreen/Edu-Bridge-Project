@@ -1,11 +1,11 @@
-const { clsx } = require('clsx');
-const { twMerge } = require('tailwind-merge');
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-function cn(...inputs) {
+export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-const formatDate = (date) => {
+export const formatDate = (date) => {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -13,13 +13,7 @@ const formatDate = (date) => {
   });
 };
 
-const truncateText = (text, maxLength) => {
+export const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + '...';
-};
-
-module.exports = {
-  cn,
-  formatDate,
-  truncateText
 };

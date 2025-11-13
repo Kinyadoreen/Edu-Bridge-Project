@@ -1,8 +1,8 @@
-const React = require('react');
-const { Link } = require('react-router-dom');
-const { BookOpen, Users, Award, TrendingUp, ArrowRight } = require('lucide-react');
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { BookOpen, Users, Award, TrendingUp, ArrowRight } from 'lucide-react';
 
-function Home() {
+export default function Home() {
   const stats = [
     { icon: <Users size={40} />, number: '50,000+', label: 'Students' },
     { icon: <BookOpen size={40} />, number: '200+', label: 'Free Courses' },
@@ -102,5 +102,3 @@ function Home() {
     </div>
   );
 }
-
-module.exports = Home;
