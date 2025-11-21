@@ -106,7 +106,7 @@ MONGODB_URI=mongodb://localhost:27017/edubridge
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 
 # Optional: MongoDB Atlas (Cloud Database)
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/edubridge
+# MONGODB_URI=mongodb+srv://username:
 ```
 
 ### **3. Frontend Setup**
