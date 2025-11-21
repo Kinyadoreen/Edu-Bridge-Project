@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, reset } from '../store/slices/authSlice';
+import { register, reset } from '../store/slices/authSlice';
 
-function Login() {
+function Signup() {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
 
-  const { email, password } = formData;
+  const { name, email, password, confirmPassword } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,18 +40,29 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
-    if (!email || !password) {
+
+    if (!name || !email || !password || !confirmPassword) {
       alert('Please fill in all fields');
       return;
     }
 
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters');
+      return;
+    }
+
     const userData = {
+      name,
       email,
       password,
     };
 
-    dispatch(login(userData));
+    dispatch(register(userData));
   };
 
   return (
@@ -67,16 +80,29 @@ function Login() {
         </div>
       </nav>
 
-      {/* Login Form */}
+      {/* Signup Form */}
       <div className="container-sm" style={{ marginTop: '4rem', marginBottom: '4rem' }}>
         <div className="card" style={{ maxWidth: '500px', margin: '0 auto' }}>
           <div className="card-header">
-            <h2 className="card-title text-center">Login to EduBridge</h2>
-            <p className="text-center text-muted">Access your learning dashboard</p>
+            <h2 className="card-title text-center">Join EduBridge</h2>
+            <p className="text-center text-muted">Start your learning journey today</p>
           </div>
           
           <div className="card-body">
             <form onSubmit={onSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={name}
+                  placeholder="John Doe"
+                  onChange={onChange}
+                  required
+                />
+              </div>
+
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
                 <input
@@ -97,7 +123,20 @@ function Login() {
                   id="password"
                   name="password"
                   value={password}
-                  placeholder="Enter your password"
+                  placeholder="Minimum 6 characters"
+                  onChange={onChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  placeholder="Re-enter your password"
                   onChange={onChange}
                   required
                 />
@@ -108,14 +147,14 @@ function Login() {
                 className="btn btn-primary w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Logging in...' : 'Login'}
+                {isLoading ? 'Creating account...' : 'Sign Up'}
               </button>
             </form>
 
             <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
               <p className="text-muted">
-                Don't have an account?{' '}
-                <a href="/signup" style={{ fontWeight: 600 }}>Sign Up</a>
+                Already have an account?{' '}
+                <a href="/login" style={{ fontWeight: 600 }}>Login</a>
               </p>
             </div>
           </div>
@@ -125,4 +164,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
